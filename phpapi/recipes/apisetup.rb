@@ -7,8 +7,6 @@ node[:deploy].each do |app_name, deploy|
     code <<-EOH
 	php composer.phar self-update
 	php composer.phar install
-	cd ..
-	chown www-data:www-data current
 	EOH
   end
   
