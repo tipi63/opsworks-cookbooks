@@ -12,6 +12,15 @@ node[:deploy].each do |app_name, deploy|
 	EOH
   end
   
+  script "fix_rights" do
+    interpreter "bash"
+    user "root"
+    cwd "#{deploy[:deploy_to]}"
+    code <<-EOH
+	chown www-data:www-data current
+	EOH
+  end
+  
   script "setup_yii" do
     interpreter "bash"
     user "root"
@@ -33,8 +42,8 @@ node[:deploy].each do |app_name, deploy|
     cwd "#{deploy[:deploy_to]}/releases"
     code <<-EOH
 	folder=$(find -maxdepth 1 -type d  | sort -nr | awk 'NR==2')
-	cd $folder/avatars
-	mv * ../../../current/avatars/
+	rm -f ../current/avatars/*
+	mv -f $folder/avatars/* ../current/avatars/
 	EOH
   end
 end
