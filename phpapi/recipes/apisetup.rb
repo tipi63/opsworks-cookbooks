@@ -33,15 +33,4 @@ node[:deploy].each do |app_name, deploy|
 	chmod 777 avatars
 	EOH
   end
-  
-  script "move_avatars" do
-    interpreter "bash"
-    user "root"
-    cwd "#{deploy[:deploy_to]}/releases"
-    code <<-EOH
-	folder=$(find -maxdepth 1 -type d  | sort -nr | awk 'NR==2')
-	rm -f ../current/avatars/*
-	mv -f $folder/avatars/* ../current/avatars/
-	EOH
-  end
 end
