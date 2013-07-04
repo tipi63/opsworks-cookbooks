@@ -31,6 +31,7 @@ node[:deploy].each do |app_name, deploy|
 	mkdir protected/runtime
 	chmod 777 protected/runtime
 	chmod 777 avatars
+	chmod 700 protected/yiic
 	EOH
   end
 end
